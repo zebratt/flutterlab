@@ -88,6 +88,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   image:
     dependency: transitive
     description:
@@ -205,6 +210,29 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  video_player:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "0.10.9-sprout"
+      resolved-ref: "0460df4a6956f93c1b91efcfa094ed48fd52b01b"
+      url: "git@git.llsapp.com:laix-flutter/video_player.git"
+    source: git
+    version: "0.10.7"
+  video_player_platform_interface:
+    dependency: transitive
+    description:
+      name: video_player_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
+  video_player_web:
+    dependency: transitive
+    description:
+      name: video_player_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2+3"
   xml:
     dependency: transitive
     description:
@@ -214,4 +242,4 @@ packages:
     version: "3.5.0"
 sdks:
   dart: ">=2.4.0 <3.0.0"
-  flutter: ">=0.1.4 <3.0.0"
+  flutter: ">=1.12.13+hotfix.4 <2.0.0"

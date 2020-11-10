@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutterdemo/sprout_video_player/sprout_video_player.dart';
+import 'package:flutterdemo/sprout_video_player/sprout_video_player_controller.dart';
+import 'package:video_player/video_player.dart';
 
 const banners = [
   'https://sprout.llscdn.com/f911aefe5704b820aed77b02a6c4b63e.png',
@@ -41,8 +44,56 @@ class Home extends StatelessWidget {
             itemCount: 3,
             viewportFraction: 0.8,
           ),
-        )
+        ),
+        Preview()
+        // Container(
+        //     padding: EdgeInsets.only(top: 20),
+        //     height: 350,
+        //     child: Swiper(
+        //       loop: false,
+        //       viewportFraction: 0.91,
+        //       itemCount: 1,
+        //       itemBuilder: (BuildContext ctx, int idx) {
+        //         return Preview();
+        //       },
+        //     ))
       ]),
+    );
+  }
+}
+
+SproutVideoPlayerController _controller = SproutVideoPlayerController(
+  videoPlayerController: VideoPlayerController.network('https://cc-b.llscdn.com/ssk-prod/312f7759451da8a248dbdde931e2daa1.mp4'),
+  autoPlay: true
+);
+
+class Preview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(right: 20),
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: 200,
+            height: 200,
+            child: SproutVideoPlayer(
+              controller: _controller,
+            ),
+          ),
+          Container(
+            height: 93,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
+                color: Color(0xFFFFFFFF),
+                border: Border.all(color: Color(0xFFFFF2D7), width: 1)),
+            child: Text('text'),
+          )
+        ],
+      ),
     );
   }
 }
