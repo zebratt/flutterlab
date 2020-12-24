@@ -30,11 +30,14 @@ class Switch extends HookWidget {
     return Column(
       children: [
         Visibility(visible: visible.value, child: child),
-        RaisedButton(
-            onPressed: () {
-              visible.value = !visible.value;
-            },
-            child: Text('toggle'))
+        GestureDetector(
+          onTap: () {
+            visible.value = !visible.value;
+          },
+          child: Container(
+            color: Colors.grey,
+              width: 120, height: 40, child: Center(child: Text('toggle'))),
+        )
       ],
     );
   }
@@ -49,7 +52,16 @@ class TestWidget extends Widget {
 
   Widget build(BuildContext context) {
     print('----- test widget build');
-    return Text('test widget1');
+    return Text('test abc');
+  }
+}
+
+class TestComponentElement extends ComponentElement {
+  TestComponentElement(Widget widget) : super(widget);
+
+  @override
+  Widget build() {
+    return (super.widget as TestWidget).build(this);
   }
 }
 
@@ -58,14 +70,14 @@ class TestElement extends Element {
 
   Element _child;
 
-  @override
-  void mount(Element parent, dynamic newSlot) {
-    super.mount(parent, newSlot);
-    print('----- mount');
-    assert(_child == null);
-    performRebuild();
-    assert(_child != null);
-  }
+  // @override
+  // void mount(Element parent, dynamic newSlot) {
+  //   super.mount(parent, newSlot);
+  //   print('----- mount');
+  //   assert(_child == null);
+  //   rebuild();
+  //   assert(_child != null);
+  // }
 
   @override
   bool get debugDoingBuild => throw UnimplementedError();
@@ -76,12 +88,13 @@ class TestElement extends Element {
     _child = updateChild(_child, built, slot);
   }
 
-   @override
-  void update(Widget newWidget) {
-    super.update(newWidget);
-    print("----- update");
-    performRebuild();
-  }
+  // @override
+  // void update(Widget newWidget) {
+  //   super.update(newWidget);
+  //   print("----- update");
+  //   assert(widget == newWidget);
+  //   rebuild();
+  // }
 
   Widget build() {
     return (super.widget as TestWidget).build(this);
