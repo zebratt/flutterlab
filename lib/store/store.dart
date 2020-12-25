@@ -33,8 +33,13 @@ class WordRepository extends StateNotifier<List<Word>> {
   }
 }
 
-var wordsProvider = FutureProvider<WordRepository>((ref) async {
+var wordsFutureProvider =
+    FutureProvider.autoDispose<WordRepository>((ref) async {
   var words = await StorageManager.getWords();
 
   return WordRepository(words);
+});
+
+var wordsProvider = Provider.autoDispose<AsyncValue<List<Word>>>((ref) {
+  return ref.watch(wordsFutureProvider).whenData((value) => value.words);
 });

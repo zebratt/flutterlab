@@ -7,18 +7,18 @@ import 'package:url_launcher/url_launcher.dart';
 class HomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = useProvider(wordsProvider);
+    var provider = useProvider(wordsProvider);
 
     return provider.when(
-        data: (repo) {
-          if (repo.words.isEmpty) {
+        data: (words) {
+          if (words.isEmpty) {
             return Center(child: Text('Empty'));
           }
 
           return Padding(
             padding: EdgeInsets.only(top: 12),
             child: ListView(children: [
-              for (var word in repo.words)
+              for (var word in words)
                 _WordItem(
                   text: word.text,
                 )
