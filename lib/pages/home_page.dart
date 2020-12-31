@@ -7,28 +7,25 @@ import 'package:url_launcher/url_launcher.dart';
 class HomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    var provider = useProvider(wordsProvider);
+    var provider = useProvider(wordsFutureProvider);
 
     return provider.when(
-        data: (words) {
+        data: (data) {
+          var words = data.words;
+
           if (words.isEmpty) {
             return Center(child: Text('Empty'));
           }
 
-          return Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: ListView(children: [
-              for (var word in words)
-                _WordItem(
-                  text: word.text,
-                )
-            ]),
-          );
+          return ListView(children: [
+            for (var word in words)
+              _WordItem(
+                text: word.text,
+              )
+          ]);
         },
         loading: () => Center(child: CircularProgressIndicator()),
-        error: (error, stack) {
-          return Text('error');
-        });
+        error: (_, __) => Text('error'));
   }
 }
 
@@ -51,7 +48,6 @@ class _WordItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 24),
         height: 48,
         decoration: BoxDecoration(
-            color: Colors.grey,
             border: Border(bottom: BorderSide(width: 1, color: Colors.black))),
         child: Align(
           alignment: Alignment.centerLeft,

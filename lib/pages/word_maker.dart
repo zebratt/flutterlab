@@ -16,10 +16,12 @@ class WordMaker extends HookWidget {
           text: _textController.value.text,
           pos: _posController.value.text,
           paraphrase: _paraphraseController.value.text);
-      context.read(wordsProvider).whenData((value) {
+      context.read(wordsFutureProvider).whenData((value) {
         value.add(newWord);
-        Navigator.pop(context);
+        context.refresh(wordsFutureProvider);
       });
+
+      Navigator.pop(context);
     }
 
     return Scaffold(
