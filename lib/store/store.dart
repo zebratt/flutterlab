@@ -22,20 +22,24 @@ class StorageManager {
   }
 }
 
-class WordRepository extends StateNotifier<List<Word>> {
-  WordRepository(List<Word> state) : super(state);
+class WordRepository extends StateNotifier<AsyncValue<List<Word>>> {
+  WordRepository() : super(const AsyncValue.loading()) {
+    _fetch();
+  }
 
-  List<Word> get words => state;
+  _fetch() async {
+    state = await AsyncValue.guard(() async {
+      return await StorageManager.getWords();
+    });
+  }
 
   add(Word word) {
-    state = [...state, word];
-    // StorageManager.save(words);
+    state.whenData((words) async {
+      state = await AsyncValue.guard(() async {
+        return [...words, word];
+      });
+    });
   }
 }
 
-var wordsFutureProvider =
-    FutureProvider.autoDispose<WordRepository>((ref) async {
-  var words = await StorageManager.getWords();
-
-  return WordRepository(words);
-});
+var wordsProvider = StateNotifierProvider((ref) => WordRepository());

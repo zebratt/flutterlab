@@ -7,12 +7,10 @@ import 'package:url_launcher/url_launcher.dart';
 class HomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    var provider = useProvider(wordsFutureProvider);
+    var provider = useProvider(wordsProvider.state);
 
     return provider.when(
-        data: (data) {
-          var words = data.words;
-
+        data: (words) {
           if (words.isEmpty) {
             return Center(child: Text('Empty'));
           }
